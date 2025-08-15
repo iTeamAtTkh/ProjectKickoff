@@ -3,7 +3,8 @@ import React from 'react';
 const AboutUs = () => {
   return (
     <>
-      <p>About US placeholder</p>
+    
+     <h1> Meet Our team</h1>
 
     </>
   );
