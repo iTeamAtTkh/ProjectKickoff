@@ -4,15 +4,18 @@
 }
 body {
     margin: 0;
+    border: red 2px solid
 }
 .nav{
     background-color: brown;
     color: white;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     gap: 2rem;
     padding: 0 1rem;
+    width:100%;
+ 
 }
 .site-title {
     font-size: 2rem;
