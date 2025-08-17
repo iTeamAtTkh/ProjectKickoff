@@ -31,6 +31,15 @@ const Home = () => {
           <p className='answer'></p>
           </div>
         </div>
+      </div>
+      <div className='Container3'>
+        <div >
+          <img  className='img2' src="" alt="" />
+        </div>
+        <div>
+          <p className='quote'>By connecting communities with fresh food that would otherwise go to waste, PantryPal fights hunger and food waste at the same time.
+</p>
+        </div>
 
       </div>
 
