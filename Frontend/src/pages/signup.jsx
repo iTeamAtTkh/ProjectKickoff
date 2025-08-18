@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React from 'react';
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import supabase from "../client";
 
 const Signup = () => {
-  const [alert, showAlert] = useState({ message: "", show: false });
+const [alert, showAlert] = useState({
+    message: "",
+    show: false
+  });
   const navigate = useNavigate();
-
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: { username: "", email: "", snapNumber: "", ebtNumber: "", zipcode: "", password: "" },
+    const { register, handleSubmit, formState: { errors } } = useForm({
+    defaultValues: { username: "", name: "", email: "", snapNumber: "", ebtNumber: "", zipcode: "", password: "" },
   });
 
   const signupUser = async (values) => {
@@ -21,6 +25,7 @@ const Signup = () => {
           password: values.password,
           snapNumber: values.snapNumber,
           ebtNumber: values.ebtNumber,
+          zipcode: values.zipcode,
         }),
       });
       const data = await res.json();
@@ -36,7 +41,7 @@ const Signup = () => {
   return (
     <div className="bg-gray-100 flex items-center justify-center min-h-screen">
       <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Create Account</h2>
         {alert.show && (
           <div className="alert alert-error mb-4 flex justify-between items-center">
             {alert.message}
@@ -50,6 +55,7 @@ const Signup = () => {
           <input {...register("email", { required: "Email required" })} placeholder="Email" className="input input-bordered w-full"/>
           {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
+          <input {...register("name")} placeholder="Name" className="input input-bordered w-full"/>
           <input {...register("snapNumber")} placeholder="SNAP Number" className="input input-bordered w-full"/>
           <input {...register("ebtNumber")} placeholder="EBT Number" className="input input-bordered w-full"/>
           <input {...register("zipcode")} placeholder="Zipcode" className="input input-bordered w-full"/>
