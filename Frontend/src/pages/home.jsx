@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <>
     
-      <p>Home placeholder</p>
+      
       <div className='Container1'>
         <div className='C1L'>
           <h1 className='title'>Welcome to PantryPal</h1>
