@@ -1,7 +1,7 @@
 // backend/routes/auth.js
 import express from "express";
 import { createClient } from "@supabase/supabase-js";
-import prisma from "./db/index.js";
+import prisma from "../db/index.js";
 
 const router = express.Router();
 
