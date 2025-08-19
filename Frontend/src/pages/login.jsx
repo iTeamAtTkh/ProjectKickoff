@@ -9,16 +9,20 @@ const Login = () => {
 
   const loginUser = async (values) => {
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-      const data = await res.json();
+
+      const data = await res.json().catch(() => ({})); // safely parse JSON
 
       if (!res.ok) throw new Error(data.error || "Login failed");
 
-      // Save token if needed: localStorage.setItem("token", data.token);
+      // Save the token to localStorage for persistence
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+
       navigate("/dashboard");
     } catch (err) {
       showAlert({ show: true, message: err.message });
@@ -36,8 +40,8 @@ const Login = () => {
           </div>
         )}
         <form className="space-y-4" onSubmit={handleSubmit(loginUser)}>
-          <input {...register("email")} placeholder="Email" className="input input-bordered w-full"/>
-          <input {...register("password")} placeholder="Password" type="password" className="input input-bordered w-full"/>
+          <input {...register("email", { required: "Email required" })} placeholder="Email" className="input input-bordered w-full"/>
+          <input {...register("password", { required: "Password required" })} placeholder="Password" type="password" className="input input-bordered w-full"/>
           <button type="submit" className="btn btn-primary w-full">Login</button>
         </form>
         <p className="mt-4 text-center text-sm">

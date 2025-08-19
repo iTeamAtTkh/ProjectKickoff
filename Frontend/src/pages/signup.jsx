@@ -16,21 +16,27 @@ const [alert, showAlert] = useState({
 
   const signupUser = async (values) => {
     try {
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch("/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           fullName: values.username,
           email: values.email,
           password: values.password,
-          snapNumber: values.snapNumber,
-          ebtNumber: values.ebtNumber,
+          snapNumber: values.snapNumber || null, 
+          ebtNumber: values.ebtNumber || null,
           zipcode: values.zipcode,
         }),
       });
-      const data = await res.json();
+
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok) throw new Error(data.error || "Signup failed");
+
+      // Optional: store token if backend returns it in future
+      if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
 
       navigate("/dashboard");
     } catch (err) {
