@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import supabase from "../client";
 
+const BASE_URL = "http://localhost:3000";
+
 const Signup = () => {
 const [alert, showAlert] = useState({
     message: "",
@@ -16,7 +18,7 @@ const [alert, showAlert] = useState({
 
   const signupUser = async (values) => {
     try {
-      const res = await fetch("/auth/signup", {
+      const res = await fetch(`${BASE_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

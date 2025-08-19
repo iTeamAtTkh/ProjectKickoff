@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
+const BASE_URL = "http://localhost:3000";
+
 const Login = () => {
   const [alert, showAlert] = useState({ message: "", show: false });
   const navigate = useNavigate();
@@ -9,7 +11,7 @@ const Login = () => {
 
   const loginUser = async (values) => {
     try {
-      const res = await fetch("/auth/login", {
+      const res = await fetch("${BASE_URL}/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
