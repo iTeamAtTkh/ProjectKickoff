@@ -7,7 +7,7 @@ const router = express.Router();
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_ANON_KEY
 );
 
 // Signup route
@@ -21,7 +21,10 @@ router.post("/signup", async (req, res) => {
   }
 
   // 1. Create user in Supabase
-  const { data, error } = await supabase.auth.signUp({ email, password });
+  const { data, error } = await supabase.auth.signUp(
+    { email, password },
+    { emailRedirectTo: "http://localhost:5173/dashboard" }
+  );
   if (error) {
     console.error("Supabase signup error:", error);
     return res.status(400).json({ error: error.message });
