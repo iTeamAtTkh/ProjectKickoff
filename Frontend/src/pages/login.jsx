@@ -11,17 +11,17 @@ const Login = () => {
 
   const loginUser = async (values) => {
     try {
-      const res = await fetch("${BASE_URL}/auth/login", {
+      // backticks ` ` for interpolation
+      const res = await fetch(`${BASE_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
 
-      const data = await res.json().catch(() => ({})); // safely parse JSON
+      const data = await res.json().catch(() => ({}));
 
       if (!res.ok) throw new Error(data.error || "Login failed");
 
-      // Save the token to localStorage for persistence
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
 

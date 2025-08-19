@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import authRoutes from "./routes/auth.js";
 import authTestRouter from "./routes/auth-test.js";
 import userRouter from "./routes/user.js";
@@ -11,6 +12,12 @@ import orderRouter from "./routes/order.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Enable CORS for your frontend
+app.use(cors({
+  origin: "http://localhost:5173", // frontend URL
+  credentials: true,               // allows cookies/auth headers
+}));
 
 app.use(express.json());
 

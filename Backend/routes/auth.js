@@ -12,12 +12,20 @@ const supabase = createClient(
 
 // Signup route
 router.post("/signup", async (req, res) => {
+  console.log("Signup request body:", req.body); // <-- DEBUG LOG
+  
   const { email, password, fullName, ebtNumber, snapNumber } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
 
   // 1. Create user in Supabase
   const { data, error } = await supabase.auth.signUp({ email, password });
-  if (error) return res.status(400).json({ error: error.message });
-
+  if (error) {
+    console.error("Supabase signup error:", error);
+    return res.status(400).json({ error: error.message });
+  }
   const user = data.user;
 
   try {
@@ -43,8 +51,15 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
+
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return res.status(400).json({ error: error.message });
+  if (error) {
+    console.error("Supabase login error:", error);
+    return res.status(400).json({ error: error.message });
+  }
 
   return res.json({
     token: data.session.access_token,
