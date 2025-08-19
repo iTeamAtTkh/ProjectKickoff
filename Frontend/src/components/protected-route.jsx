@@ -1,34 +1,38 @@
-// import {useState, useEffect} from "react";
-// import { Navigate } from "react-router-dom";
-// import supabase from "../client";
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import axios from "axios";
 
-// export default function ProtectedRoute({ children }){
-// const [session, setSession] = useState();
-// const [isSessionChecked, setIsSessionChecked] = useState(false);
+export default function ProtectedRoute({ children }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-//   useEffect(() => {
-//     // Check if there's a session on component mount
-//     supabase.auth.getSession().then(({ data: { session }}) => {
-//       setSession(() => session ?? null);
-//       setIsSessionChecked(() => true);
-//     });
+  useEffect(() => {
+    async function validateToken() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setIsAuthenticated(false);
+        setIsLoading(false);
+        return;
+      }
 
-//     // Set up an event listener for auth state changes
-//     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
-//       setSession(() => session ?? null);
-//     });
+      try {
+        await axios.get("http://localhost:3000/users/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setIsAuthenticated(true);
+      } catch (err) {
+        localStorage.removeItem("token");
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    }
 
-//     // Clean up the listener on unmount
-//     return () => {
-//       authListener?.subscription.unsubscribe();
-//     };
-//   }, []);
-  
-//     if(!isSessionChecked){
-//     return <div>Loading...</div>
-//   } else {
-//     return (
-//       <>{session ? children : <Navigate to="/login" />}</>
-//     )
-//   }
-// }
+    validateToken();
+  }, []);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+  return children;
+}
