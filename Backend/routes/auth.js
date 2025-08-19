@@ -1,23 +1,34 @@
 // backend/routes/auth.js
 import express from "express";
 import { createClient } from "@supabase/supabase-js";
-import prisma from "./db/index.js";
+import prisma from "../db/index.js";
 
 const router = express.Router();
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_ANON_KEY
 );
 
 // Signup route
 router.post("/signup", async (req, res) => {
+  console.log("Signup request body:", req.body); // <-- DEBUG LOG
+  
   const { email, password, fullName, ebtNumber, snapNumber } = req.body;
 
-  // 1. Create user in Supabase
-  const { data, error } = await supabase.auth.signUp({ email, password });
-  if (error) return res.status(400).json({ error: error.message });
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
 
+  // 1. Create user in Supabase
+  const { data, error } = await supabase.auth.signUp(
+    { email, password },
+    { emailRedirectTo: "http://localhost:5173/dashboard" }
+  );
+  if (error) {
+    console.error("Supabase signup error:", error);
+    return res.status(400).json({ error: error.message });
+  }
   const user = data.user;
 
   try {
@@ -43,8 +54,15 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password are required" });
+  }
+
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) return res.status(400).json({ error: error.message });
+  if (error) {
+    console.error("Supabase login error:", error);
+    return res.status(400).json({ error: error.message });
+  }
 
   return res.json({
     token: data.session.access_token,
