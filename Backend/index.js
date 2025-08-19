@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import authRoutes from "./routes/auth.js";
 import authTestRouter from "./routes/auth-test.js";
 import userRouter from "./routes/user.js";
 import storeRouter from "./routes/store.js";
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Mount routers
+app.use("/auth", authRoutes);
 app.use("/auth-test", authTestRouter);
 app.use("/users", userRouter);
 app.use("/stores", storeRouter);
