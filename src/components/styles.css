@@ -1,0 +1,36 @@
+
+.nav{
+  background: #5F391F;
+ background: linear-gradient(180deg, rgba(95, 57, 31, 1) 15%, rgba(197, 118, 64, 1) 100%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 2rem;
+    padding: 0 1rem;
+    width:100%;
+ 
+}
+.site-title {
+    font-size: 2rem;
+}
+.nav ul{
+    padding: 0;
+    margin:0;
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+.nav a{
+    color: inherit;
+    align-items: center;
+    text-decoration: none;
+    padding: 0.5rem;
+    display: block;
+}
+.nav a:hover{
+    background-color: #777;
+}
+.nav a.active{
+    background-color: #555;
+}
