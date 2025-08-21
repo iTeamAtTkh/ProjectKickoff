@@ -1,78 +1,59 @@
-// backend/prisma/schema.prisma
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
-// ------------------
-// User Profile Table
-// ------------------
 model UserProfile {
-  id         String   @id // Matches Supabase auth.users.id (UUID)
+  id         String   @id
   fullName   String
   email      String   @unique
-  ebtNumber  String?  @unique 
+  ebtNumber  String?  @unique
   snapNumber String?  @unique
   createdAt  DateTime @default(now())
-
+  zipcode    String?  @db.VarChar(255)
   orders     Order[]
 }
 
-// ------------------
-// Store Table
-// ------------------
 model Store {
   id        Int      @id @default(autoincrement())
   name      String
   address   String
   zipcode   String
   createdAt DateTime @default(now())
-
   items     Item[]
 }
 
-// ------------------
-// Item Table
-// ------------------
 model Item {
-  id             Int      @id @default(autoincrement())
+  id             Int         @id @default(autoincrement())
   name           String
   description    String?
   expirationDate DateTime
-  available      Boolean  @default(true)
+  available      Boolean     @default(true)
   storeId        Int
-  store          Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
-
+  price          Float?      @default(0)
+  quantity       Int?        @default(0)
+  store          Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
   orderItems     OrderItem[]
 }
 
-// ------------------
-// Order Table
-// ------------------
 model Order {
-  id         Int        @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
   userId     String
-  createdAt  DateTime   @default(now())
-  confirmed  Boolean    @default(false)
-
+  createdAt  DateTime    @default(now())
+  confirmed  Boolean     @default(false)
   user       UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
   orderItems OrderItem[]
 }
 
-// ------------------
-// OrderItem Table (join table)
-// ------------------
 model OrderItem {
   id      Int   @id @default(autoincrement())
   orderId Int
   itemId  Int
-
-  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
   item    Item  @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  order   Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
