@@ -1,13 +1,6 @@
-* {
-    box-sizing: border-box;
-
-}
-body {
-    margin: 0;
-    border: red 2px solid
-}
 .nav{
-    background-color: brown;
+  background: #5F391F;
+ background: linear-gradient(180deg, rgba(95, 57, 31, 1) 15%, rgba(197, 118, 64, 1) 100%);
     color: white;
     display: flex;
     justify-content: space-between;
