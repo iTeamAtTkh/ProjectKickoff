@@ -1,44 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import debounce from "lodash.debounce"; // We'll use lodash debounce
 
-const API = "http://localhost:3000";
+const API = "http://localhost:3000"; // Backend URL
 
 export default function Dashboard() {
   const token = localStorage.getItem("token");
   const queryClient = useQueryClient();
 
+  // -------------------------
+  // LOCAL STATE
+  // -------------------------
   const [searchQuery, setSearchQuery] = useState("");
   const [cart, setCart] = useState([]);
   const [pickupDate, setPickupDate] = useState("");
   const [selectedStore, setSelectedStore] = useState(null);
   const [checkoutStage, setCheckoutStage] = useState("shopping");
   const [orderConfirmation, setOrderConfirmation] = useState(null);
+  const [discountFilter, setDiscountFilter] = useState(null); // 15, 30, 100 for free
 
   // -------------------------
-  // FETCH USER
+  // FETCH USER PROFILE
   // -------------------------
-  const {
-    data: user,
-    isLoading: userLoading,
-    error: userError,
-  } = useQuery({
+  const { data: user, isLoading: userLoading, error: userError } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
       if (!token) throw new Error("No token in localStorage");
-      try {
-        const res = await axios.get(`${API}/users/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        return res.data;
-      } catch (err) {
-        console.error("Error fetching /users/me:", err.response?.data || err.message);
-        throw err;
-      }
+      const res = await axios.get(`${API}/users/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return res.data;
     },
     onSuccess: (data) => {
-      console.log("User fetched successfully:", data);
-      const unconfirmedOrder = data.orders.find((o) => !o.confirmed);
+      const unconfirmedOrder = data.orders?.find((o) => !o.confirmed);
       if (unconfirmedOrder) {
         setCart(unconfirmedOrder.orderItems.map((oi) => oi.item));
       }
@@ -46,7 +41,7 @@ export default function Dashboard() {
   });
 
   // -------------------------
-  // SEARCH
+  // SEARCH ITEMS (DEBOUNCED)
   // -------------------------
   const {
     data: searchResults,
@@ -54,29 +49,31 @@ export default function Dashboard() {
     isFetching: searchLoading,
     error: searchError,
   } = useQuery({
-    queryKey: ["search", searchQuery],
+    queryKey: ["search", searchQuery, discountFilter],
     queryFn: async () => {
-      console.log("🔍 Searching for:", searchQuery);
-      const res = await axios.get(`${API}/items/search?q=${searchQuery}`);
+      let url = `${API}/items/search?q=${encodeURIComponent(searchQuery)}`;
+      if (discountFilter) url += `&discount=${discountFilter}`;
+      const res = await axios.get(url);
       return res.data;
     },
-    enabled: false,
+    enabled: false, // manually refetch
   });
 
-  const handleSearch = () => {
-    if (!searchQuery.trim()) {
-      console.warn("⚠️ Search query is empty");
-      return;
-    }
-    refetchSearch();
-  };
+  // Debounce the search input so API isn’t called on every keystroke
+  const debouncedSearch = debounce(() => {
+    if (searchQuery.trim() !== "") refetchSearch();
+  }, 400);
+
+  useEffect(() => {
+    debouncedSearch();
+    return debouncedSearch.cancel; // cleanup
+  }, [searchQuery, discountFilter]);
 
   // -------------------------
-  // ADD / REMOVE CART
+  // ADD & REMOVE ITEM MUTATIONS
   // -------------------------
   const addMutation = useMutation({
     mutationFn: async (itemId) => {
-      console.log("➕ Adding item to cart:", itemId);
       const res = await axios.post(
         `${API}/orders/add`,
         { itemId },
@@ -84,30 +81,18 @@ export default function Dashboard() {
       );
       return res.data.orderItem.item;
     },
-    onSuccess: (item) => {
-      console.log("✅ Item added to cart:", item);
-      setCart((prev) => [...prev, item]);
-    },
-    onError: (err) => {
-      console.error("❌ Error adding item:", err.response?.data || err.message);
-    },
+    onSuccess: (item) => setCart((prev) => [...prev, item]),
   });
 
   const removeMutation = useMutation({
     mutationFn: async (itemId) => {
-      console.log("➖ Removing item from cart:", itemId);
       await axios.delete(`${API}/orders/remove/${itemId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       return itemId;
     },
-    onSuccess: (itemId) => {
-      console.log("✅ Item removed:", itemId);
-      setCart((prev) => prev.filter((i) => i.id !== itemId));
-    },
-    onError: (err) => {
-      console.error("❌ Error removing item:", err.response?.data || err.message);
-    },
+    onSuccess: (itemId) =>
+      setCart((prev) => prev.filter((i) => i.id !== itemId)),
   });
 
   // -------------------------
@@ -115,7 +100,6 @@ export default function Dashboard() {
   // -------------------------
   const checkoutMutation = useMutation({
     mutationFn: async () => {
-      console.log("🛒 Checkout started:", { pickupDate, selectedStore });
       const res = await axios.post(
         `${API}/orders/checkout`,
         { pickupDate, storeId: selectedStore },
@@ -124,13 +108,9 @@ export default function Dashboard() {
       return res.data;
     },
     onSuccess: (data) => {
-      console.log("✅ Checkout success:", data);
       setOrderConfirmation(data);
       setCheckoutStage("confirmation");
       setCart([]);
-    },
-    onError: (err) => {
-      console.error("❌ Checkout failed:", err.response?.data || err.message);
     },
   });
 
@@ -138,18 +118,14 @@ export default function Dashboard() {
   // RENDER
   // -------------------------
   if (userLoading) return <p>Loading user...</p>;
-  if (userError) return <p style={{ color: "red" }}>Error loading user: {userError.message}</p>;
+  if (userError)
+    return <p style={{ color: "red" }}>Error loading user: {userError.message}</p>;
 
   return (
-    <div>
+    <div style={{ padding: "1rem" }}>
       <h2>Welcome, {user?.fullName || user?.email || "User"}</h2>
 
-      {/* Debug JSON Dump */}
-      <details style={{ margin: "1rem 0" }}>
-        <summary>🛠 Debug User Data</summary>
-        <pre>{JSON.stringify(user, null, 2)}</pre>
-      </details>
-
+      {/* -------------------- SEARCH & FILTER -------------------- */}
       {checkoutStage === "shopping" && (
         <>
           <div>
@@ -159,9 +135,15 @@ export default function Dashboard() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button onClick={handleSearch}>Search</button>
+
+            {/* Discount Filter Buttons */}
+            <button onClick={() => setDiscountFilter(15)}>15% Off</button>
+            <button onClick={() => setDiscountFilter(30)}>30% Off</button>
+            <button onClick={() => setDiscountFilter(100)}>FREE</button>
+            <button onClick={() => setDiscountFilter(null)}>Clear Filter</button>
           </div>
 
+          {/* Search Results Table */}
           <div>
             <h3>Search Results</h3>
             {searchLoading ? (
@@ -171,17 +153,36 @@ export default function Dashboard() {
             ) : !searchResults?.length ? (
               <p>No items found.</p>
             ) : (
-              <ul>
-                {searchResults.map((item) => (
-                  <li key={item.id}>
-                    {item.name} ({item.store?.name || "Unknown store"})
-                    <button onClick={() => addMutation.mutate(item.id)}>Add to Cart</button>
-                  </li>
-                ))}
-              </ul>
+              <table border={1} cellPadding={5} style={{ borderCollapse: "collapse" }}>
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Store</th>
+                    <th>Price</th>
+                    <th>Discount</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {searchResults.map((item) => (
+                    <tr key={item.id}>
+                      <td>{item.name}</td>
+                      <td>{item.store?.name || "Unknown"}</td>
+                      <td>${item.price.toFixed(2)}</td>
+                      <td>{item.discount || 0}%</td>
+                      <td>
+                        <button onClick={() => addMutation.mutate(item.id)}>
+                          Add to Cart
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             )}
           </div>
 
+          {/* Cart */}
           <div>
             <h3>Your Cart</h3>
             {cart.length === 0 ? (
@@ -190,7 +191,7 @@ export default function Dashboard() {
               <ul>
                 {cart.map((item) => (
                   <li key={item.id}>
-                    {item.name}
+                    {item.name} - ${item.price.toFixed(2)}
                     <button onClick={() => removeMutation.mutate(item.id)}>Remove</button>
                   </li>
                 ))}
@@ -199,11 +200,14 @@ export default function Dashboard() {
           </div>
 
           {cart.length > 0 && (
-            <button onClick={() => setCheckoutStage("checkout")}>Proceed to Checkout</button>
+            <button onClick={() => setCheckoutStage("checkout")}>
+              Proceed to Checkout
+            </button>
           )}
         </>
       )}
 
+      {/* -------------------- CHECKOUT -------------------- */}
       {checkoutStage === "checkout" && (
         <div>
           <h3>Checkout</h3>
@@ -227,6 +231,7 @@ export default function Dashboard() {
         </div>
       )}
 
+      {/* -------------------- CONFIRMATION -------------------- */}
       {checkoutStage === "confirmation" && orderConfirmation && (
         <div>
           <h3>Order Confirmed!</h3>

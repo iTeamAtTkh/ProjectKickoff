@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 
 // --- Path to master inventory JSON ---
-const masterInventoryPath = path.resolve("./masterInventory.json");
+const masterInventoryPath = path.resolve("./data/masterInventory.json");
 const masterInventory = JSON.parse(fs.readFileSync(masterInventoryPath, "utf-8"));
 
 // --- Define Stores ---
