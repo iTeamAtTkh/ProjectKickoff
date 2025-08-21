@@ -29,17 +29,17 @@ model Store {
 }
 
 model Item {
-  id             Int         @id @default(autoincrement())
-  name           String
-  description    String?
-  expirationDate DateTime
-  available      Boolean     @default(true)
-  storeId        Int
-  price          Float?      @default(0)
-  quantity       Int?        @default(0)
-  discount       Float?      @default(0) 
-  store          Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
-  orderItems     OrderItem[]
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String?
+  sellByDate  DateTime
+  available   Boolean     @default(true)
+  storeId     Int
+  price       Float?      @default(0)
+  quantity    Int?        @default(0)
+  discount    Float?      @default(0)
+  store       Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  orderItems  OrderItem[]
 }
 
 model Order {

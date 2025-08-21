@@ -1,3 +1,4 @@
+// backend/scripts/seedStores.js
 import prisma from "../db/index.js";
 import fs from "fs";
 import path from "path";
@@ -29,83 +30,83 @@ const stores = [
 ];
 
 // --- Helpers ---
-function getWeightedExpirationDays() {
+function getWeightedDaysUntilSellBy() {
   const r = Math.random() * 100;
-
-  if (r < 20) return 0; // almost expired
-  if (r < 45) return Math.floor(Math.random() * 3) + 1; // 1-3 days left
-  if (r < 70) return Math.floor(Math.random() * 4) + 4; // 4-7 days left
-  if (r < 85) return Math.floor(Math.random() * 15) + 16; // 16-30 days left
-  return Math.floor(Math.random() * 15) + 31; // 31-45 days left
+  if (r < 20) return 0;           // same-day sell-by
+  if (r < 45) return Math.floor(Math.random() * 3) + 1; // 1-3 days
+  if (r < 70) return Math.floor(Math.random() * 4) + 4; // 4-7 days
+  if (r < 85) return Math.floor(Math.random() * 15) + 16; // 16-30 days
+  return Math.floor(Math.random() * 30) + 31; // 31-60 days
 }
 
-// --- Calculate discounted price and discount percentage ---
-function calculatePriceAndDiscount(basePrice, daysLeft) {
-  let finalPrice = basePrice;
-  let discount = 0;
+function calculateSellByDate(baseDate = new Date()) {
+  const days = getWeightedDaysUntilSellBy();
+  const sellByDate = new Date(baseDate);
+  sellByDate.setDate(sellByDate.getDate() + days);
+  return sellByDate;
+}
 
-  if (daysLeft <= 0) {
-    finalPrice = 0;
-    discount = 1; // 100% off
-  } else if (daysLeft >= 1 && daysLeft <= 3) {
-    finalPrice = +(basePrice * 0.7).toFixed(2);
-    discount = 0.3;
-  } else if (daysLeft >= 4 && daysLeft <= 7) {
-    finalPrice = +(basePrice * 0.85).toFixed(2);
-    discount = 0.15;
+function calculatePriceAndDiscount(basePrice, daysUntilSellBy) {
+  if (daysUntilSellBy < 0) {
+    return { finalPrice: 0, discount: 1 }; // past sell-by: free
+  } else if (daysUntilSellBy <= 3) {
+    return { finalPrice: +(basePrice * 0.7).toFixed(2), discount: 0.3 };
+  } else if (daysUntilSellBy <= 7) {
+    return { finalPrice: +(basePrice * 0.85).toFixed(2), discount: 0.15 };
   } else {
-    finalPrice = basePrice;
-    discount = 0;
+    return { finalPrice: basePrice, discount: 0 };
   }
-
-  return { finalPrice, discount };
 }
 
-// --- Seed DB ---
+// --- Seed function ---
 async function seedStores() {
   try {
-    for (const store of stores) {
-      for (const loc of store.locations) {
-        const dbStore = await prisma.store.create({
+    for (const storeGroup of stores) {
+      for (const location of storeGroup.locations) {
+        const store = await prisma.store.create({
           data: {
-            name: store.name,
-            address: loc.address,
-            zipcode: loc.zip,
+            name: storeGroup.name,
+            address: location.address,
+            zipcode: location.zip,
           },
         });
 
-        // Pick 25 random items
-        const shuffled = [...masterInventory].sort(() => 0.5 - Math.random());
-        const selectedItems = shuffled.slice(0, 25);
+        // Add items for this store
+         for (const masterItem of masterInventory) {
+          const sellByDate = masterItem.sellByDate
+            ? new Date(masterItem.sellByDate)
+            : calculateSellByDate();
 
-        for (const item of selectedItems) {
-          const daysLeft = getWeightedExpirationDays();
-          const sellByDate = new Date();
-          sellByDate.setDate(sellByDate.getDate() + daysLeft);
+          const today = new Date();
+          const diffTime = sellByDate - today;
+          const daysUntilSellBy = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-          const { finalPrice, discount } = calculatePriceAndDiscount(item.basePrice, daysLeft);
+          const { finalPrice, discount } = calculatePriceAndDiscount(
+            masterItem.basePrice,
+            daysUntilSellBy
+          );
 
           await prisma.item.create({
             data: {
-              name: item.name,
-              description: item.description || "",
-              sellByDate,
-              available: true,
-              storeId: dbStore.id,
+              name: masterItem.name,
+              description: masterItem.description || "",
               price: finalPrice,
               quantity: Math.floor(Math.random() * 20) + 1,
+              available: true,
               discount,
+              sellByDate, 
+              storeId: store.id,
             },
           });
         }
 
-        console.log(`Seeded store: ${store.name} at ${loc.address}`);
+        console.log(`Seeded store: ${storeGroup.name} at ${location.address}`);
       }
     }
 
     console.log("All stores seeded successfully!");
   } catch (err) {
-    console.error("Error seeding stores:", err);
+    console.error("Seeding error:", err);
   } finally {
     await prisma.$disconnect();
   }

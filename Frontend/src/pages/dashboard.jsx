@@ -41,6 +41,17 @@ export default function Dashboard() {
   });
 
   // -------------------------
+  // FETCH STORES
+  // -------------------------
+  const { data: stores } = useQuery({
+    queryKey: ["stores"],
+    queryFn: async () => {
+      const res = await axios.get(`${API}/stores`);
+      return res.data;
+    },
+  });
+
+  // -------------------------
   // SEARCH ITEMS (DEBOUNCED)
   // -------------------------
   const {
@@ -128,12 +139,13 @@ export default function Dashboard() {
       {/* -------------------- SEARCH & FILTER -------------------- */}
       {checkoutStage === "shopping" && (
         <>
-          <div>
+          <div style={{ marginBottom: "1rem" }}>
             <input
               type="text"
               placeholder="Search items..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ marginRight: "1rem", padding: "0.25rem" }}
             />
 
             {/* Discount Filter Buttons */}
@@ -143,7 +155,7 @@ export default function Dashboard() {
             <button onClick={() => setDiscountFilter(null)}>Clear Filter</button>
           </div>
 
-          {/* Search Results Table */}
+          {/* -------------------- SEARCH RESULTS TABLE -------------------- */}
           <div>
             <h3>Search Results</h3>
             {searchLoading ? (
@@ -153,27 +165,59 @@ export default function Dashboard() {
             ) : !searchResults?.length ? (
               <p>No items found.</p>
             ) : (
-              <table border={1} cellPadding={5} style={{ borderCollapse: "collapse" }}>
+              <table
+                border={1}
+                cellPadding={5}
+                style={{ borderCollapse: "collapse", width: "100%" }}
+              >
                 <thead>
                   <tr>
                     <th>Item</th>
                     <th>Store</th>
+                    <th>Address</th>
                     <th>Price</th>
                     <th>Discount</th>
+                    <th>Sell-By</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   {searchResults.map((item) => (
-                    <tr key={item.id}>
+                    <tr
+                      key={item.id}
+                      style={{
+                        backgroundColor:
+                          item.daysUntilSellBy <= 3 ? "#ffe6e6" : "transparent",
+                      }}
+                    >
                       <td>{item.name}</td>
                       <td>{item.store?.name || "Unknown"}</td>
-                      <td>${item.price.toFixed(2)}</td>
-                      <td>{item.discount || 0}%</td>
+                      <td>{item.store?.address || "Unknown"}</td>
                       <td>
-                        <button onClick={() => addMutation.mutate(item.id)}>
-                          Add to Cart
-                        </button>
+                        {item.discount > 0 ? (
+                          <>
+                            <span
+                              style={{
+                                textDecoration: "line-through",
+                                color: "gray",
+                              }}
+                            >
+                              ${item.originalPrice.toFixed(2)}
+                            </span>{" "}
+                            <span>${item.price.toFixed(2)}</span>
+                          </>
+                        ) : (
+                          <>${item.price.toFixed(2)}</>
+                        )}
+                      </td>
+                      <td>{item.discount > 0 ? `${item.discount * 100}% off` : "—"}</td>
+                      <td style={{ color: item.daysUntilSellBy <= 3 ? "red" : "black" }}>
+                        {item.sellByDate
+                          ? new Date(item.sellByDate).toLocaleDateString()
+                          : "N/A"}
+                      </td>
+                      <td>
+                        <button onClick={() => addMutation.mutate(item.id)}>Add to Cart</button>
                       </td>
                     </tr>
                   ))}
@@ -182,8 +226,8 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* Cart */}
-          <div>
+          {/* -------------------- CART -------------------- */}
+          <div style={{ marginTop: "1rem" }}>
             <h3>Your Cart</h3>
             {cart.length === 0 ? (
               <p>Your cart is empty.</p>
@@ -192,7 +236,12 @@ export default function Dashboard() {
                 {cart.map((item) => (
                   <li key={item.id}>
                     {item.name} - ${item.price.toFixed(2)}
-                    <button onClick={() => removeMutation.mutate(item.id)}>Remove</button>
+                    <button
+                      onClick={() => removeMutation.mutate(item.id)}
+                      style={{ marginLeft: "0.5rem" }}
+                    >
+                      Remove
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -200,7 +249,10 @@ export default function Dashboard() {
           </div>
 
           {cart.length > 0 && (
-            <button onClick={() => setCheckoutStage("checkout")}>
+            <button
+              onClick={() => setCheckoutStage("checkout")}
+              style={{ marginTop: "1rem" }}
+            >
               Proceed to Checkout
             </button>
           )}
@@ -209,23 +261,33 @@ export default function Dashboard() {
 
       {/* -------------------- CHECKOUT -------------------- */}
       {checkoutStage === "checkout" && (
-        <div>
+        <div style={{ marginTop: "1rem" }}>
           <h3>Checkout</h3>
-          <label>
+          <label style={{ display: "block", marginBottom: "0.5rem" }}>
             Pickup Date:
             <input
               type="date"
               value={pickupDate}
               onChange={(e) => setPickupDate(e.target.value)}
+              style={{ marginLeft: "0.5rem" }}
             />
           </label>
-          <label>
-            Store ID:
-            <input
-              type="number"
+          <label style={{ display: "block", marginBottom: "0.5rem" }}>
+            Pickup Store:
+            <select
               value={selectedStore || ""}
               onChange={(e) => setSelectedStore(Number(e.target.value))}
-            />
+              style={{ marginLeft: "0.5rem" }}
+            >
+              <option value="" disabled>
+                Select a store
+              </option>
+              {stores?.map((store) => (
+                <option key={store.id} value={store.id}>
+                  {store.name} — {store.address}
+                </option>
+              ))}
+            </select>
           </label>
           <button onClick={() => checkoutMutation.mutate()}>Confirm Order</button>
         </div>
@@ -233,7 +295,7 @@ export default function Dashboard() {
 
       {/* -------------------- CONFIRMATION -------------------- */}
       {checkoutStage === "confirmation" && orderConfirmation && (
-        <div>
+        <div style={{ marginTop: "1rem" }}>
           <h3>Order Confirmed!</h3>
           <p>Pickup Date: {orderConfirmation.pickupDate}</p>
           <p>Store ID: {orderConfirmation.storeId}</p>
