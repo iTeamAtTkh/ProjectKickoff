@@ -37,6 +37,7 @@ model Item {
   storeId        Int
   price          Float?      @default(0)
   quantity       Int?        @default(0)
+  discount       Float?      @default(0) 
   store          Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
   orderItems     OrderItem[]
 }

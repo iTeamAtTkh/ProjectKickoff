@@ -14,8 +14,8 @@ const stores = [
       { address: "1111 Downtown Blvd", zip: "10001" },
       { address: "2222 Uptown Ave", zip: "10002" },
       { address: "3333 Westtown St", zip: "10003" },
-      { address: "4444 Easttown Rd", zip: "10004" }
-    ]
+      { address: "4444 Easttown Rd", zip: "10004" },
+    ],
   },
   {
     name: "Ziggy Superstore",
@@ -23,26 +23,42 @@ const stores = [
       { address: "5555 Central Blvd", zip: "20001" },
       { address: "6666 North Ave", zip: "20002" },
       { address: "7777 South St", zip: "20003" },
-      { address: "8888 West Rd", zip: "20004" }
-    ]
-  }
+      { address: "8888 West Rd", zip: "20004" },
+    ],
+  },
 ];
 
 // --- Helpers ---
 function getWeightedExpirationDays() {
   const r = Math.random() * 100;
-  if (r < 20) return -Math.floor(Math.random() * 1); 
-  if (r < 45) return Math.floor(Math.random() * 3) + 1; 
-  if (r < 70) return Math.floor(Math.random() * 4) + 4; 
-  if (r < 85) return Math.floor(Math.random() * 15) + 16; 
-  return Math.floor(Math.random() * 15) + 31; 
+
+  if (r < 20) return 0; // almost expired
+  if (r < 45) return Math.floor(Math.random() * 3) + 1; // 1-3 days left
+  if (r < 70) return Math.floor(Math.random() * 4) + 4; // 4-7 days left
+  if (r < 85) return Math.floor(Math.random() * 15) + 16; // 16-30 days left
+  return Math.floor(Math.random() * 15) + 31; // 31-45 days left
 }
 
-function calculatePrice(basePrice, daysLeft) {
-  if (daysLeft <= 0) return 0;
-  if (daysLeft >= 1 && daysLeft <= 3) return +(basePrice * 0.7).toFixed(2);
-  if (daysLeft >= 4 && daysLeft <= 7) return +(basePrice * 0.85).toFixed(2);
-  return basePrice;
+// --- Calculate discounted price and discount percentage ---
+function calculatePriceAndDiscount(basePrice, daysLeft) {
+  let finalPrice = basePrice;
+  let discount = 0;
+
+  if (daysLeft <= 0) {
+    finalPrice = 0;
+    discount = 1; // 100% off
+  } else if (daysLeft >= 1 && daysLeft <= 3) {
+    finalPrice = +(basePrice * 0.7).toFixed(2);
+    discount = 0.3;
+  } else if (daysLeft >= 4 && daysLeft <= 7) {
+    finalPrice = +(basePrice * 0.85).toFixed(2);
+    discount = 0.15;
+  } else {
+    finalPrice = basePrice;
+    discount = 0;
+  }
+
+  return { finalPrice, discount };
 }
 
 // --- Seed DB ---
@@ -64,18 +80,21 @@ async function seedStores() {
 
         for (const item of selectedItems) {
           const daysLeft = getWeightedExpirationDays();
-          const expirationDate = new Date();
-          expirationDate.setDate(expirationDate.getDate() + daysLeft);
+          const sellByDate = new Date();
+          sellByDate.setDate(sellByDate.getDate() + daysLeft);
+
+          const { finalPrice, discount } = calculatePriceAndDiscount(item.basePrice, daysLeft);
 
           await prisma.item.create({
             data: {
               name: item.name,
               description: item.description || "",
-              expirationDate,
+              sellByDate,
               available: true,
               storeId: dbStore.id,
-              price: calculatePrice(item.basePrice, daysLeft),
-              quantity: Math.floor(Math.random() * 20) + 1, // random stock count
+              price: finalPrice,
+              quantity: Math.floor(Math.random() * 20) + 1,
+              discount,
             },
           });
         }
