@@ -20,7 +20,7 @@ const AboutUs = () => {
           {/* Logo / Illustration */}
           <div className="aboutimg">
             <img
-              src="/images/pantrypalimg.png"
+              src="/pantrypalimg.png"
               alt="PantryPal logo (smiling paper bag with food)"
               className="w-[320px] h-[320px] object-contain bg-[#F7F3EE] p-6 rounded shadow-sm"
             />
