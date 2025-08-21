@@ -1,0 +1,922 @@
+[
+  {
+    "id": "40-681-9981",
+    "name": "Arabica Coffee",
+    "category": "Beverages",
+    "image": "☕️🧃🍵🧋",
+    "description": "Arabica Coffee - Beverages",
+    "basePrice": 20,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "06-955-3428",
+    "name": "White Rice",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "White Rice - Grains & Pulses",
+    "basePrice": 6,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "71-594-6552",
+    "name": "Long Grain Rice",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Long Grain Rice - Grains & Pulses",
+    "basePrice": 1.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "57-437-1828",
+    "name": "Plum",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Plum - Fruits & Vegetables",
+    "basePrice": 4,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "21-120-6238",
+    "name": "All-Purpose Flour",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "All-Purpose Flour - Grains & Pulses",
+    "basePrice": 1.75,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "39-629-5554",
+    "name": "Egg (Goose)",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Egg (Goose) - Dairy",
+    "basePrice": 2.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "66-268-8345",
+    "name": "Greek Yogurt",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Greek Yogurt - Dairy",
+    "basePrice": 3,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "46-452-9419",
+    "name": "Egg (Duck)",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Egg (Duck) - Dairy",
+    "basePrice": 1,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "51-469-4611",
+    "name": "Long Grain Rice",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Long Grain Rice - Grains & Pulses",
+    "basePrice": 1.6,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "42-220-9305",
+    "name": "White Sugar",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "White Sugar - Grains & Pulses",
+    "basePrice": 2,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "75-094-1179",
+    "name": "Rye Bread",
+    "category": "Bakery",
+    "image": "🥐🍞🫓🥖",
+    "description": "Rye Bread - Bakery",
+    "basePrice": 3,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "11-073-0189",
+    "name": "Plum",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Plum - Fruits & Vegetables",
+    "basePrice": 4,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "22-621-2774",
+    "name": "Strawberries",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Strawberries - Fruits & Vegetables",
+    "basePrice": 6,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "39-449-0772",
+    "name": "Feta Cheese",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Feta Cheese - Dairy",
+    "basePrice": 7,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "55-936-2406",
+    "name": "Bread Flour",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Bread Flour - Grains & Pulses",
+    "basePrice": 1.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "82-041-7211",
+    "name": "Swiss Cheese",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Swiss Cheese - Dairy",
+    "basePrice": 8,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "48-414-6162",
+    "name": "Arabica Coffee",
+    "category": "Beverages",
+    "image": "☕️🧃🍵🧋",
+    "description": "Arabica Coffee - Beverages",
+    "basePrice": 20,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "76-854-0095",
+    "name": "White Sugar",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "White Sugar - Grains & Pulses",
+    "basePrice": 2,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "25-349-7974",
+    "name": "Spinach",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Spinach - Fruits & Vegetables",
+    "basePrice": 2.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "66-627-9752",
+    "name": "Trout",
+    "category": "Seafood",
+    "image": "🦀🐟🦞🦐",
+    "description": "Trout - Seafood",
+    "basePrice": 12,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "78-614-4402",
+    "name": "Green Beans",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Green Beans - Fruits & Vegetables",
+    "basePrice": 2,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "67-025-1245",
+    "name": "Cabbage",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Cabbage - Fruits & Vegetables",
+    "basePrice": 1,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "68-418-6724",
+    "name": "Parmesan Cheese",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Parmesan Cheese - Dairy",
+    "basePrice": 12,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "40-795-0753",
+    "name": "Raw Sugar",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Raw Sugar - Grains & Pulses",
+    "basePrice": 1.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "02-508-3777",
+    "name": "Egg (Quail)",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Egg (Quail) - Dairy",
+    "basePrice": 0.8,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "79-741-0770",
+    "name": "Mushrooms",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Mushrooms - Fruits & Vegetables",
+    "basePrice": 6,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "31-211-5803",
+    "name": "Oatmeal Biscuit",
+    "category": "Bakery",
+    "image": "🥐🍞🫓🥖",
+    "description": "Oatmeal Biscuit - Bakery",
+    "basePrice": 5,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "16-499-5059",
+    "name": "Pear",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Pear - Fruits & Vegetables",
+    "basePrice": 4.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "76-340-4432",
+    "name": "Cucumber",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Cucumber - Fruits & Vegetables",
+    "basePrice": 1.75,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "38-732-7667",
+    "name": "Pineapple",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Pineapple - Fruits & Vegetables",
+    "basePrice": 3.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "79-136-9840",
+    "name": "Herbal Tea",
+    "category": "Beverages",
+    "image": "☕️🧃🍵🧋",
+    "description": "Herbal Tea - Beverages",
+    "basePrice": 30,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "73-401-5721",
+    "name": "Haddock",
+    "category": "Seafood",
+    "image": "🦀🐟🦞🦐",
+    "description": "Haddock - Seafood",
+    "basePrice": 9,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "91-848-0606",
+    "name": "Onion",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Onion - Fruits & Vegetables",
+    "basePrice": 2,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "54-109-8062",
+    "name": "Sushi Rice",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Sushi Rice - Grains & Pulses",
+    "basePrice": 4.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "70-612-2531",
+    "name": "Pineapple",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Pineapple - Fruits & Vegetables",
+    "basePrice": 3.45,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "26-161-6692",
+    "name": "Zucchini",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Zucchini - Fruits & Vegetables",
+    "basePrice": 2.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "43-893-5408",
+    "name": "Short Grain Rice",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Short Grain Rice - Grains & Pulses",
+    "basePrice": 3,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "11-316-8405",
+    "name": "Mango",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Mango - Fruits & Vegetables",
+    "basePrice": 5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "34-086-3222",
+    "name": "Lemon",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Lemon - Fruits & Vegetables",
+    "basePrice": 2.3,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "21-816-1004",
+    "name": "Black Coffee",
+    "category": "Beverages",
+    "image": "☕️🧃🍵🧋",
+    "description": "Black Coffee - Beverages",
+    "basePrice": 15,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "43-693-2092",
+    "name": "Butter",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Butter - Dairy",
+    "basePrice": 3,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "63-270-7076",
+    "name": "Multigrain Bread",
+    "category": "Bakery",
+    "image": "🥐🍞🫓🥖",
+    "description": "Multigrain Bread - Bakery",
+    "basePrice": 3.5,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "90-230-9767",
+    "name": "Long Grain Rice",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Long Grain Rice - Grains & Pulses",
+    "basePrice": 1.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "05-334-2923",
+    "name": "Bread Flour",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Bread Flour - Grains & Pulses",
+    "basePrice": 1.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "52-481-5224",
+    "name": "Kiwi",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Kiwi - Fruits & Vegetables",
+    "basePrice": 6,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "11-325-7396",
+    "name": "Mango",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Mango - Fruits & Vegetables",
+    "basePrice": 5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "70-854-6891",
+    "name": "Sourdough Bread",
+    "category": "Bakery",
+    "image": "🥐🍞🫓🥖",
+    "description": "Sourdough Bread - Bakery",
+    "basePrice": 4,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "46-520-1819",
+    "name": "Short Grain Rice",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Short Grain Rice - Grains & Pulses",
+    "basePrice": 4.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "91-105-7317",
+    "name": "Orange",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Orange - Fruits & Vegetables",
+    "basePrice": 3,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "40-751-8635",
+    "name": "Pineapple",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Pineapple - Fruits & Vegetables",
+    "basePrice": 3.4,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "02-920-4829",
+    "name": "White Bread",
+    "category": "Bakery",
+    "image": "🥐🍞🫓🥖",
+    "description": "White Bread - Bakery",
+    "basePrice": 2.5,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "36-918-2937",
+    "name": "Green Coffee",
+    "category": "Beverages",
+    "image": "☕️🧃🍵🧋",
+    "description": "Green Coffee - Beverages",
+    "basePrice": 12,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "68-761-6907",
+    "name": "Zucchini",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Zucchini - Fruits & Vegetables",
+    "basePrice": 2.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "69-468-5468",
+    "name": "Sourdough Bread",
+    "category": "Bakery",
+    "image": "🥐🍞🫓🥖",
+    "description": "Sourdough Bread - Bakery",
+    "basePrice": 4.5,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "27-635-8394",
+    "name": "Orange",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Orange - Fruits & Vegetables",
+    "basePrice": 2.9,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "41-729-5410",
+    "name": "Sardines",
+    "category": "Seafood",
+    "image": "🦀🐟🦞🦐",
+    "description": "Sardines - Seafood",
+    "basePrice": 6,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "11-581-9869",
+    "name": "Carrot",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Carrot - Fruits & Vegetables",
+    "basePrice": 1.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "78-237-0277",
+    "name": "Black Tea",
+    "category": "Beverages",
+    "image": "☕️🧃🍵🧋",
+    "description": "Black Tea - Beverages",
+    "basePrice": 5,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "75-152-8731",
+    "name": "Pear",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Pear - Fruits & Vegetables",
+    "basePrice": 4.45,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "55-697-5242",
+    "name": "Ricotta Cheese",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Ricotta Cheese - Dairy",
+    "basePrice": 6,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "14-844-4138",
+    "name": "Black Coffee",
+    "category": "Beverages",
+    "image": "☕️🧃🍵🧋",
+    "description": "Black Coffee - Beverages",
+    "basePrice": 15,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "20-225-3930",
+    "name": "White Tea",
+    "category": "Beverages",
+    "image": "☕️🧃🍵🧋",
+    "description": "White Tea - Beverages",
+    "basePrice": 25,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "66-993-4234",
+    "name": "Cucumber",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Cucumber - Fruits & Vegetables",
+    "basePrice": 1.8,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "87-762-1317",
+    "name": "Mozzarella Cheese",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Mozzarella Cheese - Dairy",
+    "basePrice": 7,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "81-844-2979",
+    "name": "Broccoli",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Broccoli - Fruits & Vegetables",
+    "basePrice": 4,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "44-408-7594",
+    "name": "Eggplant",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Eggplant - Fruits & Vegetables",
+    "basePrice": 3,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "26-010-9519",
+    "name": "Trout",
+    "category": "Seafood",
+    "image": "🦀🐟🦞🦐",
+    "description": "Trout - Seafood",
+    "basePrice": 12,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "65-464-5070",
+    "name": "Heavy Cream",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Heavy Cream - Dairy",
+    "basePrice": 4,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "07-970-9352",
+    "name": "Bell Pepper",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Bell Pepper - Fruits & Vegetables",
+    "basePrice": 4.45,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "88-746-9468",
+    "name": "Onion",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Onion - Fruits & Vegetables",
+    "basePrice": 2,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "06-336-5482",
+    "name": "Sardines",
+    "category": "Seafood",
+    "image": "🦀🐟🦞🦐",
+    "description": "Sardines - Seafood",
+    "basePrice": 6,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "03-276-3931",
+    "name": "Mango",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Mango - Fruits & Vegetables",
+    "basePrice": 4.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "39-232-5341",
+    "name": "Arborio Rice",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Arborio Rice - Grains & Pulses",
+    "basePrice": 4.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "12-239-9399",
+    "name": "Potato",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Potato - Fruits & Vegetables",
+    "basePrice": 1.2,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "70-815-4015",
+    "name": "Butter Biscuit",
+    "category": "Bakery",
+    "image": "🥐🍞🫓🥖",
+    "description": "Butter Biscuit - Bakery",
+    "basePrice": 6,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "11-032-9778",
+    "name": "Peas",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Peas - Fruits & Vegetables",
+    "basePrice": 3,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "54-374-9986",
+    "name": "Cream",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Cream - Dairy",
+    "basePrice": 2.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "77-312-6317",
+    "name": "Spinach",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Spinach - Fruits & Vegetables",
+    "basePrice": 2.4,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "13-844-2178",
+    "name": "Sardines",
+    "category": "Seafood",
+    "image": "🦀🐟🦞🦐",
+    "description": "Sardines - Seafood",
+    "basePrice": 6,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "22-141-9798",
+    "name": "White Sugar",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "White Sugar - Grains & Pulses",
+    "basePrice": 2,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "20-022-3173",
+    "name": "Bread Flour",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Bread Flour - Grains & Pulses",
+    "basePrice": 1.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "26-177-5690",
+    "name": "Cucumber",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Cucumber - Fruits & Vegetables",
+    "basePrice": 1.8,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "70-871-4536",
+    "name": "Swiss Cheese",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Swiss Cheese - Dairy",
+    "basePrice": 8,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "89-543-3456",
+    "name": "Blueberries",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Blueberries - Fruits & Vegetables",
+    "basePrice": 10,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "82-395-5070",
+    "name": "Chocolate Biscuit",
+    "category": "Bakery",
+    "image": "🥐🍞🫓🥖",
+    "description": "Chocolate Biscuit - Bakery",
+    "basePrice": 5,
+    "expirationDate": null,
+    "mustHave": false
+  },
+  {
+    "id": "14-305-5348",
+    "name": "Cheese",
+    "category": "Dairy",
+    "image": "🥛🧀🍦🧈",
+    "description": "Cheese - Dairy",
+    "basePrice": 9,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "25-010-9478",
+    "name": "Eggplant",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Eggplant - Fruits & Vegetables",
+    "basePrice": 3,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "13-202-4809",
+    "name": "Garlic",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Garlic - Fruits & Vegetables",
+    "basePrice": 7,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "67-270-7464",
+    "name": "Jasmine Rice",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Jasmine Rice - Grains & Pulses",
+    "basePrice": 4.75,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "11-733-1756",
+    "name": "Rice Flour",
+    "category": "Grains & Pulses",
+    "image": "🍚🌾🍘🍝",
+    "description": "Rice Flour - Grains & Pulses",
+    "basePrice": 2,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "80-988-4653",
+    "name": "Zucchini",
+    "category": "Fruits & Vegetables",
+    "image": "🥭🥦🥑🥕",
+    "description": "Zucchini - Fruits & Vegetables",
+    "basePrice": 2.5,
+    "expirationDate": null,
+    "mustHave": true
+  },
+  {
+    "id": "60-343-7973",
+    "name": "Multigrain Bread",
+    "category": "Bakery",
+    "image": "🛒🥐🍞🫓🥖",
+    "description": "Multigrain Bread - Bakery",
+    "basePrice": 3.2,
+    "expirationDate": null,
+    "mustHave": false
+  }
+]
