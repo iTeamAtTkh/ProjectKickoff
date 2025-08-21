@@ -75,6 +75,7 @@ async function seedStores() {
               available: true,
               storeId: dbStore.id,
               price: calculatePrice(item.basePrice, daysLeft),
+              quantity: Math.floor(Math.random() * 20) + 1, // random stock count
             },
           });
         }

@@ -40,6 +40,7 @@ router.post("/signup", async (req, res) => {
         fullName,
         ebtNumber: ebtNumber || null,
         snapNumber: snapNumber || null,
+        zipcode: req.body.zipcode || null,
       },
     });
 
