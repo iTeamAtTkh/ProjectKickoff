@@ -162,7 +162,7 @@ export default function Dashboard() {
             {/* DISCOUNT FILTER BUTTONS */}
             <button onClick={() => setDiscountFilter(15)}>15% Off</button>
             <button onClick={() => setDiscountFilter(30)}>30% Off</button>
-            <button onClick={() => setDiscountFilter(100)}>Free</button>
+            <button onClick={() => setDiscountFilter(100)}>FREE</button>
             <button onClick={() => setDiscountFilter(null)}>Clear Filter</button>
           </div>
 
