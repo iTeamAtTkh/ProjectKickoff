@@ -32,9 +32,20 @@ const Login = () => {
   };
 
   return (
+    
     <div className="bg-gray-100 flex items-center justify-center min-h-screen">
+      <div className="bg-[#C57640] rounded-lg shadow-lg p-8 w-full max-w-lg text-center">
+        <div className="object-center justify-center justify-items-center">
+            <img
+              src="/pantrypalimg.png"
+              alt="PantryPal logo (smiling paper bag with food)"
+              className="w-[100px] h-[100px] object-contain justify-center p-6 rounded "
+            />
+          </div>
+          <h2 className="text-2xl font-bold mb-6 text-center  text-white">LOGIN ACCOUNT </h2>
+    
       <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login Account </h2>
+        {/* <h2 className="text-2xl font-bold mb-6 text-center">Login Account </h2> */}
         {alert.show && (
           <div className="alert alert-error mb-4 flex justify-between items-center">
             {alert.message}
@@ -42,15 +53,18 @@ const Login = () => {
           </div>
         )}
         <form className="space-y-4" onSubmit={handleSubmit(loginUser)}>
-          <input {...register("email", { required: "Email required" })} placeholder="Email" className="input input-bordered w-full"/>
-          <input {...register("password", { required: "Password required" })} placeholder="Password" type="password" className="input input-bordered w-full"/>
-          <button type="submit" className="btn btn-primary w-full">Login</button>
+          <input {...register("email", { required: "Email required" })} placeholder="Email" className="input input-bordered w-full text-lg "/>
+          <input {...register("password", { required: "Password required" })} placeholder="Password" type="password" className="input input-bordered w-full  border-black rounded text-lg "/>
+          <button  type="submit" className="btn btn-primary w-full bg-orange-500 hover:bg-orange-800 py-2  text-white border-black rounded">Login</button>
         </form>
         <p className="mt-4 text-center text-sm">
           Don't have an account? <Link to="/signup" className="text-blue-500 hover:underline">Sign up</Link>
         </p>
+      
+      </div>
       </div>
     </div>
+    
   );
 };
 
