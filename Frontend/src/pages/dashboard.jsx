@@ -1,7 +1,8 @@
+//frontend/pages/dashboard.jsx
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import debounce from "lodash.debounce"; // We'll use lodash debounce
+import debounce from "lodash.debounce"; // use lodash debounce
 
 const API = "http://localhost:3000"; // Backend URL
 
@@ -33,6 +34,7 @@ export default function Dashboard() {
       return res.data;
     },
     onSuccess: (data) => {
+      // If user has an unconfirmed order (cart), load its items
       const unconfirmedOrder = data.orders?.find((o) => !o.confirmed);
       if (unconfirmedOrder) {
         setCart(unconfirmedOrder.orderItems.map((oi) => oi.item));
@@ -90,20 +92,26 @@ export default function Dashboard() {
         { itemId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      return res.data.orderItem.item;
+      return res.data; // return entire updated order object
     },
-    onSuccess: (item) => setCart((prev) => [...prev, item]),
+    onSuccess: (updatedOrder) => {
+      setCart(updatedOrder.orderItems.map((oi) => oi.item)); // reset cart from backend
+    },
   });
 
+  // -------------------------
+  // REMOVE ITEMS FROM CART
+  // -------------------------
   const removeMutation = useMutation({
     mutationFn: async (itemId) => {
-      await axios.delete(`${API}/orders/remove/${itemId}`, {
+      const res = await axios.delete(`${API}/orders/remove/${itemId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      return itemId;
+      return res.data; // Entire updated order object
     },
-    onSuccess: (itemId) =>
-      setCart((prev) => prev.filter((i) => i.id !== itemId)),
+    onSuccess: (updatedOrder) => {
+      setCart(updatedOrder.orderItems.map((oi) => oi.item)); // Sync cart with backend
+    },
   });
 
   // -------------------------
@@ -119,9 +127,9 @@ export default function Dashboard() {
       return res.data;
     },
     onSuccess: (data) => {
-      setOrderConfirmation(data);
+      setOrderConfirmation(data); //save order confirmation details
       setCheckoutStage("confirmation");
-      setCart([]);
+      setCart([]);  // Clear cart on checkout 
     },
   });
 
@@ -130,15 +138,18 @@ export default function Dashboard() {
   // -------------------------
   if (userLoading) return <p>Loading user...</p>;
   if (userError)
-    return <p style={{ color: "red" }}>Error loading user: {userError.message}</p>;
+    return (
+      <p style={{ color: "red" }}>Error loading user: {userError.message}</p>
+    );
 
   return (
     <div style={{ padding: "1rem" }}>
       <h2>Welcome, {user?.fullName || user?.email || "User"}</h2>
 
-      {/* -------------------- SEARCH & FILTER -------------------- */}
+      {/* -------------------- SHOPPING STAGE -------------------- */}
       {checkoutStage === "shopping" && (
         <>
+         {/* -------------------- SEARCH & FILTER -------------------- */}
           <div style={{ marginBottom: "1rem" }}>
             <input
               type="text"
@@ -148,14 +159,14 @@ export default function Dashboard() {
               style={{ marginRight: "1rem", padding: "0.25rem" }}
             />
 
-            {/* Discount Filter Buttons */}
+            {/* DISCOUNT FILTER BUTTONS */}
             <button onClick={() => setDiscountFilter(15)}>15% Off</button>
             <button onClick={() => setDiscountFilter(30)}>30% Off</button>
-            <button onClick={() => setDiscountFilter(100)}>FREE</button>
+            <button onClick={() => setDiscountFilter(100)}>Free</button>
             <button onClick={() => setDiscountFilter(null)}>Clear Filter</button>
           </div>
 
-          {/* -------------------- SEARCH RESULTS TABLE -------------------- */}
+          {/* SEARCH RESULTS */}
           <div>
             <h3>Search Results</h3>
             {searchLoading ? (
@@ -196,12 +207,7 @@ export default function Dashboard() {
                       <td>
                         {item.discount > 0 ? (
                           <>
-                            <span
-                              style={{
-                                textDecoration: "line-through",
-                                color: "gray",
-                              }}
-                            >
+                            <span style={{ textDecoration: "line-through", color: "gray" }}>
                               ${item.originalPrice.toFixed(2)}
                             </span>{" "}
                             <span>${item.price.toFixed(2)}</span>
@@ -210,14 +216,24 @@ export default function Dashboard() {
                           <>${item.price.toFixed(2)}</>
                         )}
                       </td>
-                      <td>{item.discount > 0 ? `${item.discount * 100}% off` : "—"}</td>
-                      <td style={{ color: item.daysUntilSellBy <= 3 ? "red" : "black" }}>
+                      <td>
+                        {item.discount > 0 
+                          ? `${item.discount * 100}% off` 
+                          : "—"}
+                      </td>
+                      <td 
+                        style={{ 
+                          color: item.daysUntilSellBy <= 3 ? "red" : "black", 
+                          }}
+                      >
                         {item.sellByDate
                           ? new Date(item.sellByDate).toLocaleDateString()
                           : "N/A"}
                       </td>
                       <td>
-                        <button onClick={() => addMutation.mutate(item.id)}>Add to Cart</button>
+                        <button onClick={() => addMutation.mutate(item.id)}>
+                          Add to Cart
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -226,7 +242,7 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* -------------------- CART -------------------- */}
+          {/* CART */}
           <div style={{ marginTop: "1rem" }}>
             <h3>Your Cart</h3>
             {cart.length === 0 ? (
@@ -259,7 +275,7 @@ export default function Dashboard() {
         </>
       )}
 
-      {/* -------------------- CHECKOUT -------------------- */}
+      {/* -------------------- CHECKOUT STAGE -------------------- */}
       {checkoutStage === "checkout" && (
         <div style={{ marginTop: "1rem" }}>
           <h3>Checkout</h3>
@@ -289,11 +305,13 @@ export default function Dashboard() {
               ))}
             </select>
           </label>
-          <button onClick={() => checkoutMutation.mutate()}>Confirm Order</button>
+          <button onClick={() => checkoutMutation.mutate()}>
+            Confirm Order
+            </button>
         </div>
       )}
 
-      {/* -------------------- CONFIRMATION -------------------- */}
+      {/* -------------------- CONFIRMATION STAGE -------------------- */}
       {checkoutStage === "confirmation" && orderConfirmation && (
         <div style={{ marginTop: "1rem" }}>
           <h3>Order Confirmed!</h3>

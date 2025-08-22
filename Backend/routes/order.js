@@ -1,3 +1,4 @@
+// backend/routes/order.js
 import express from "express";
 import verifyToken from "../middleware/auth.js";
 import prisma from "../db/index.js";
@@ -13,42 +14,93 @@ router.get("/", verifyToken, async (req, res) => {
   res.json(orders);
 });
 
-// Add item to current cart (order)
+// -------------------------
+// Add item to current cart
+// -------------------------
 router.post("/add", verifyToken, async (req, res) => {
-  const { itemId } = req.body;
+  try {
+    console.log("Incoming request to /orders/add");
+    console.log("Decoded JWT payload:", req.user);
+    console.log("User ID being used:", req.userId);
+    console.log("Item ID from request body:", req.body.itemId);
+    
+    const { itemId } = req.body;
+    const numericItemId = Number(itemId);
+    if (!numericItemId) {
+      return res.status(400).json({ error: "Invalid itemId" });
+    }
 
-  // Check for existing unconfirmed order
-  let order = await prisma.order.findFirst({ where: { userId: req.userId, confirmed: false } });
+    // Find or create unconfirmed order
+    let order = await prisma.order.findFirst({ 
+      where: { userId: req.userId, confirmed: false } 
+    });
 
-  if (!order) {
+    if (!order) {
     order = await prisma.order.create({ data: { userId: req.userId } });
   }
 
-  const orderItem = await prisma.orderItem.create({
-    data: { orderId: order.id, itemId }
+  // Add the new item to the order
+  await prisma.orderItem.create({
+    data: { orderId: order.id, itemId: numericItemId } // fixed variable name
+  });
+  
+  // Return full updated order with all items
+  const updatedOrder = await prisma.order.findUnique({
+    where: { id: order.id },
+    include: { orderItems: { include: { item: true } } }
   });
 
-  res.json({ order, orderItem });
+  res.json(updatedOrder);
+  } catch (err) {
+    console.error("POST /orders/add error:", err);
+    res.status(500).json({ error: "Failed to add item to cart" });
+  }
 });
 
 // Remove item from cart
 router.delete("/remove/:itemId", verifyToken, async (req, res) => {
   const { itemId } = req.params;
-  const order = await prisma.order.findFirst({ where: { userId: req.userId, confirmed: false } });
+
+  // Find Active cart
+  const order = await prisma.order.findFirst({ 
+    where: { userId: req.userId, confirmed: false } 
+  });
   if (!order) return res.status(404).json({ error: "No active cart found" });
 
-  await prisma.orderItem.deleteMany({ where: { orderId: order.id, itemId: Number(itemId) } });
-  res.json({ message: "Item removed" });
+  // Remove the item from the order
+  await prisma.orderItem.deleteMany({ 
+    where: { orderId: order.id, itemId: Number(itemId) } 
+  });
+  
+  // Return full updated order
+  const updatedOrder = await prisma.order.findUnique({
+    where: { id: order.id },
+    include: { orderItems: { include: { item: true } } }
+  });
+
+ res.json(updatedOrder);
 });
 
+// -------------------------
 // Checkout order
+// -------------------------
 router.post("/checkout", verifyToken, async (req, res) => {
   const { pickupDate, storeId } = req.body;
-  const order = await prisma.order.findFirst({ where: { userId: req.userId, confirmed: false }, include: { orderItems: { include: { item: true } } } });
+
+  // Get current unconfirmed order with items
+  const order = await prisma.order.findFirst({
+    where: { userId: req.userId, confirmed: false }, 
+    include: { orderItems: { include: { item: true } } } 
+  });
   if (!order) return res.status(404).json({ error: "No active cart found" });
 
-  await prisma.order.update({ where: { id: order.id }, data: { confirmed: true } });
+  // Mark order as confirmed
+  await prisma.order.update({ 
+    where: { id: order.id }, 
+    data: { confirmed: true } 
+  });
 
+  // Return confirmation info
   res.json({
     message: "Order confirmed",
     pickupDate,
