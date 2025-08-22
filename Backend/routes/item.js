@@ -11,10 +11,13 @@ const router = express.Router();
 // Helper to calculate days until sell-by
 function calculateDaysUntilSellBy(sellByDate) {
   if (!sellByDate) return null; // handle missing sell-by
-  const today = new Date();
+  const today = new Date();       // <-- define today
+  today.setHours(0, 0, 0, 0);    // ignore time
   const sellBy = new Date(sellByDate);
-  const diffTime = sellBy - today; // milliseconds
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // convert to days
+  sellBy.setHours(0, 0, 0, 0);    // ignore time
+
+  const diffTime = sellBy - today; // ms
+  return Math.round(diffTime / (1000 * 60 * 60 * 24)); // convert to days
 }
 
 // -------------------------
@@ -48,25 +51,37 @@ router.get("/search", async (req, res) => {
       include: { store: true }, // Include store info
     });
 
+    // -------------------------
     // Add extra calculated fields
+    // -------------------------
     const itemsWithOriginalPrice = items.map(item => {
       // Calculate days until sell-by
       const daysUntilSellBy = calculateDaysUntilSellBy(item.sellByDate);
 
-      // Normalize discount
-      const discountValue = item.discount ?? 0;
+      // Force free items if sellbydate is today or earlier
+      const discountValue =
+      (item.discount ?? 0) < 1 && daysUntilSellBy <= 0
+        ? 1
+        : item.discount ?? 0;
 
-      // Calculate original price before discount
-      const originalPrice =
-        discountValue > 0
-          ? +(item.price / (1 - discountValue)).toFixed(2)
-          : item.price;
+    // Calculate originalPrice before discount
+const originalPrice =
+  discountValue >= 1
+    ? item.price // full original price for display
+    : +(item.price / (1 - discountValue)).toFixed(2);
+
+// Calculate displayed price after discount
+const finalPrice =
+  discountValue >= 1
+    ? 0
+    : item.price;
 
       return {
         ...item,
         discount: discountValue, // always number
         daysUntilSellBy,         // null if no sell-by
         originalPrice,           // original price before discount
+        price: finalPrice,              // added for final price display on frontend
       };
     });
 

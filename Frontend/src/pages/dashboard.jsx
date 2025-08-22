@@ -207,13 +207,15 @@ export default function Dashboard() {
                       <td>
                         {item.discount > 0 ? (
                           <>
+                            {/* Show original price strikethrough */}
                             <span style={{ textDecoration: "line-through", color: "gray" }}>
                               ${item.originalPrice.toFixed(2)}
                             </span>{" "}
-                            <span>${item.price.toFixed(2)}</span>
+                            {/* Show discounted price (0 if 100% off) */}
+                            <span>${(item.price ?? 0).toFixed(2)}</span>
                           </>
                         ) : (
-                          <>${item.price.toFixed(2)}</>
+                          <>${(item.price ?? 0).toFixed(2)}</>
                         )}
                       </td>
                       <td>
@@ -224,7 +226,7 @@ export default function Dashboard() {
                       <td 
                         style={{ 
                           color: item.daysUntilSellBy <= 3 ? "red" : "black", 
-                          }}
+                        }}
                       >
                         {item.sellByDate
                           ? new Date(item.sellByDate).toLocaleDateString()
@@ -251,7 +253,7 @@ export default function Dashboard() {
               <ul>
                 {cart.map((item) => (
                   <li key={item.id}>
-                    {item.name} - ${item.price.toFixed(2)}
+                    {item.name} - ${(item.price ?? 0).toFixed(2)}
                     <button
                       onClick={() => removeMutation.mutate(item.id)}
                       style={{ marginLeft: "0.5rem" }}
@@ -307,7 +309,7 @@ export default function Dashboard() {
           </label>
           <button onClick={() => checkoutMutation.mutate()}>
             Confirm Order
-            </button>
+          </button>
         </div>
       )}
 
