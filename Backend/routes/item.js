@@ -36,12 +36,8 @@ router.get("/search", async (req, res) => {
     // Apply discount filter if present
     if (discount !== undefined) {
       const discountNum = Number(discount);
-      if (!isNaN(discountNum)) {
-        if (discountNum === 100) {
-          where.discount = 1; // Free items
-        } else {
-          where.discount = discountNum / 100; // e.g., 15% -> 0.15
-        }
+      if (!isNaN(discountNum) && discountNum !== 100) {
+        where.discount = discountNum / 100; // e.g., 15% -> 0.15
       }
     }
 
@@ -54,7 +50,7 @@ router.get("/search", async (req, res) => {
     // -------------------------
     // Add extra calculated fields
     // -------------------------
-    const itemsWithOriginalPrice = items.map(item => {
+    let itemsWithOriginalPrice = items.map(item => {
       // Calculate days until sell-by
       const daysUntilSellBy = calculateDaysUntilSellBy(item.sellByDate);
 
@@ -65,30 +61,30 @@ router.get("/search", async (req, res) => {
         : item.discount ?? 0;
 
     // Calculate originalPrice before discount
-const originalPrice =
-  discountValue >= 1
+    const originalPrice =
+    discountValue >= 1
     ? item.price // full original price for display
     : +(item.price / (1 - discountValue)).toFixed(2);
 
-// Calculate displayed price after discount
-const finalPrice =
-  discountValue >= 1
+    // Calculate displayed price after discount
+    const finalPrice =
+    discountValue >= 1
     ? 0
     : item.price;
 
-      return {
-        ...item,
-        discount: discountValue, // always number
-        daysUntilSellBy,         // null if no sell-by
-        originalPrice,           // original price before discount
-        price: finalPrice,              // added for final price display on frontend
+    return {
+      ...item,
+      discount: discountValue, // always number
+      daysUntilSellBy,         // null if no sell-by
+      originalPrice,           // original price before discount
+      price: finalPrice,              // added for final price display on frontend
       };
     });
 
     // -------------------------
     // Apply in-memory discount filter for 100% off (including forced free items)
     // -------------------------
-    if (discountFilterNum === 100) {
+    if (Number(discount) === 100) {
       itemsWithOriginalPrice = itemsWithOriginalPrice.filter(i => i.discount >= 1);
     }
 
