@@ -57,8 +57,18 @@ const Signup = () => {
 
   return (
     <div className="bg-gray-100 flex items-center justify-center min-h-screen">
+      
+      <div className="bg-[#C57640] rounded-lg shadow-lg p-8 w-full max-w-lg text-center">
+        <div className="object-center justify-center justify-items-center">
+            <img
+              src="/pantrypalimg.png"
+              alt="PantryPal logo (smiling paper bag with food)"
+              className="w-[100px] h-[100px] object-contain justify-center p-6 rounded "
+            />
+          </div>
+        <h2 className="text-2xl font-bold mb-6 text-center text-white">CREATE ACCOUNT</h2>
       <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Create Account</h2>
+        {/* <h2 className="text-2xl font-bold mb-6 text-center">Create Account</h2> */}
 
         {alert.show && (
           <div className="alert alert-error mb-4 flex justify-between items-center">
@@ -100,12 +110,13 @@ const Signup = () => {
           />
           {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
-          <button type="submit" className="btn btn-primary w-full">Register</button>
+          <button type="submit" className="btn btn-primary w-full bg-orange-500 hover:bg-orange-800 py-2  text-white border-black rounded">Register</button>
         </form>
 
         <p className="mt-4 text-center text-sm">
           Have an account? <Link to="/login" className="text-blue-500 hover:underline">Login</Link>
         </p>
+      </div>
       </div>
     </div>
   );
