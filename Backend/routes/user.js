@@ -1,3 +1,4 @@
+//backend/routes/user.js
 import express from "express";
 import verifyToken from "../middleware/auth.js";
 import prisma from "../db/index.js"; // Prisma client
