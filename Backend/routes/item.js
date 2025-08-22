@@ -85,6 +85,13 @@ const finalPrice =
       };
     });
 
+    // -------------------------
+    // Apply in-memory discount filter for 100% off (including forced free items)
+    // -------------------------
+    if (discountFilterNum === 100) {
+      itemsWithOriginalPrice = itemsWithOriginalPrice.filter(i => i.discount >= 1);
+    }
+
     res.json(itemsWithOriginalPrice);
   } catch (err) {
     console.error("Error searching items:", err);
