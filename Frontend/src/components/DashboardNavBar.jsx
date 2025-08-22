@@ -13,9 +13,9 @@ const DashboardNavBar = () => {
 
   return (
     <nav className="bg-gray-900 text-white p-4 flex justify-between">
-      <Link to="/dashboard" className="font-bold text-xl">Dashboard</Link>
+      <Link to="/dashboard" className=" flex font-bold text-xl justify-center">Dashboard</Link>
       <div className="space-x-4">
-        <button onClick={handleLogout} className="bg-red-600 px-3 py-1 rounded">Logout</button>
+        <button  onClick={handleLogout} className="btn btn-primary w-full bg-orange-500 hover:bg-orange-800  mt-4 px-6 py-2  text-white border-black rounded">Logout</button>
       </div>
     </nav>
   );

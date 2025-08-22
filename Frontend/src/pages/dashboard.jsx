@@ -141,29 +141,29 @@ export default function Dashboard() {
   if (userError) return <p style={{ color: "red" }}>Error loading user: {userError.message}</p>;
 
   return (
-    <div>
-      <h2>Welcome, {user?.fullName || user?.email || "User"}</h2>
+    <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
+      <h2 className="test-xl font-bold">Welcome, {user?.fullName || user?.email || "User"}</h2>
 
       {/* Debug JSON Dump */}
-      <details style={{ margin: "1rem 0" }}>
+      <details className="hidden" style={{ margin: "1rem 0" }}>
         <summary>🛠 Debug User Data</summary>
         <pre>{JSON.stringify(user, null, 2)}</pre>
       </details>
 
       {checkoutStage === "shopping" && (
         <>
-          <div>
-            <input
+          <div className=" flex justify-items-center justify-center mb-6">
+            <input className="focus:outline-none"
               type="text"
               placeholder="Search items..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button onClick={handleSearch}>Search</button>
+            <button className="flex bg-orange-500 text-white py-6  m-1 rounded-full hover:bg-orange-500 transition w-21 h-15 justify-center " onClick={handleSearch}>Search</button>
           </div>
 
           <div>
-            <h3>Search Results</h3>
+            <h3>Search Results</h3> 
             {searchLoading ? (
               <p>Searching...</p>
             ) : searchError ? (
@@ -199,7 +199,7 @@ export default function Dashboard() {
           </div>
 
           {cart.length > 0 && (
-            <button onClick={() => setCheckoutStage("checkout")}>Proceed to Checkout</button>
+            <button  className=" bg-orange-500 text-white py-6  m-1 rounded-full hover:bg-orange-500 transition" onClick={() => setCheckoutStage("checkout")}>Proceed to Checkout</button>
           )}
         </>
       )}
@@ -223,7 +223,7 @@ export default function Dashboard() {
               onChange={(e) => setSelectedStore(Number(e.target.value))}
             />
           </label>
-          <button onClick={() => checkoutMutation.mutate()}>Confirm Order</button>
+          <button className=" bg-orange-500 text-white py-6  m-1 rounded-full hover:bg-orange-500 transition" onClick={() => checkoutMutation.mutate()}>Confirm Order</button>
         </div>
       )}
 
