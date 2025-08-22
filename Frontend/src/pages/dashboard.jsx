@@ -163,7 +163,7 @@ export default function Dashboard() {
             <button onClick={() => setDiscountFilter(15)}>15% Off</button>
             <button onClick={() => setDiscountFilter(30)}>30% Off</button>
             <button onClick={() => setDiscountFilter(100)}>FREE</button>
-            <button onClick={() => setDiscountFilter(null)}>Clear Filter</button>
+            <button onClick={() => setDiscountFilter(null)}>Clear Discount Filter</button>
           </div>
 
           {/* SEARCH RESULTS */}
@@ -250,19 +250,24 @@ export default function Dashboard() {
             {cart.length === 0 ? (
               <p>Your cart is empty.</p>
             ) : (
+              <>
               <ul>
                 {cart.map((item) => (
                   <li key={item.id}>
                     {item.name} - ${(item.price ?? 0).toFixed(2)}
-                    <button
-                      onClick={() => removeMutation.mutate(item.id)}
-                      style={{ marginLeft: "0.5rem" }}
-                    >
+                    <button onClick={() => removeMutation.mutate(item.id)} style={{ marginLeft: "0.5rem" }}>
                       Remove
                     </button>
                   </li>
                 ))}
               </ul>
+              
+              {/* Add total */}
+      <p style={{ fontWeight: "bold", marginTop: "0.5rem" }}>
+        Total: $
+        {cart.reduce((sum, item) => sum + (item.price ?? 0), 0).toFixed(2)}
+      </p>
+    </>
             )}
           </div>
 
