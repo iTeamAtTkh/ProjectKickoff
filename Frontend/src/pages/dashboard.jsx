@@ -143,27 +143,30 @@ export default function Dashboard() {
     );
 
   return (
-    <div style={{ padding: "1rem" }}>
-      <h2>Welcome, {user?.fullName || user?.email || "User"}</h2>
+    <div className="p-6 max-w-7xl mx-auto ">
+      <h2 className="test-xl font-bold" >Welcome, {user?.fullName || user?.email || "User"}</h2>
 
       {/* -------------------- SHOPPING STAGE -------------------- */}
       {checkoutStage === "shopping" && (
         <>
          {/* -------------------- SEARCH & FILTER -------------------- */}
-          <div style={{ marginBottom: "1rem" }}>
+          <div className="flex flex-wrap justify-items-center gap-5 mb-6 items-center ">
             <input
               type="text"
               placeholder="Search items..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              style={{ marginRight: "1rem", padding: "0.25rem" }}
+              // style={{ marginRight: "1rem", padding: "0.25rem" }}
+              className=" object-center  border rounded-lg px-4 py-2 w-full md:w-1/3 focus:ring focus:ring-orange-300 items-center"
             />
+            <div className="flex gap-3 object-bottom">
 
             {/* DISCOUNT FILTER BUTTONS */}
-            <button onClick={() => setDiscountFilter(15)}>15% Off</button>
-            <button onClick={() => setDiscountFilter(30)}>30% Off</button>
-            <button onClick={() => setDiscountFilter(100)}>FREE</button>
-            <button onClick={() => setDiscountFilter(null)}>Clear Discount Filter</button>
+            <button className="py-1 space-x-1" onClick={() => setDiscountFilter(15)}>15% Off</button>
+            <button className="p-1 space-x-1" onClick={() => setDiscountFilter(30)}>30% Off</button>
+            <button className="p-1 space-x-1" onClick={() => setDiscountFilter(100)}>FREE</button>
+            <button className="p-1 space-x-1" onClick={() => setDiscountFilter(null)}>Clear Discount Filter</button>
+            </div>
           </div>
 
           {/* SEARCH RESULTS */}
@@ -177,11 +180,12 @@ export default function Dashboard() {
               <p>No items found.</p>
             ) : (
               <table
+    
                 border={1}
                 cellPadding={5}
                 style={{ borderCollapse: "collapse", width: "100%" }}
               >
-                <thead>
+                <thead className="items-center border-b m-1 p-0">
                   <tr>
                     <th>Item</th>
                     <th>Store</th>
@@ -218,7 +222,7 @@ export default function Dashboard() {
                           <>${(item.price ?? 0).toFixed(2)}</>
                         )}
                       </td>
-                      <td>
+                      <td className="text-red-700">
                         {item.discount > 0 
                           ? `${item.discount * 100}% off` 
                           : "—"}
@@ -233,7 +237,7 @@ export default function Dashboard() {
                           : "N/A"}
                       </td>
                       <td>
-                        <button onClick={() => addMutation.mutate(item.id)}>
+                        <button className="btn btn-primary w-full bg-orange-500 rounded-sm hover:bg-orange-800 m-1 px-3 py-1  text-white" onClick={() => addMutation.mutate(item.id)}>
                           Add to Cart
                         </button>
                       </td>
@@ -246,16 +250,17 @@ export default function Dashboard() {
 
           {/* CART */}
           <div style={{ marginTop: "1rem" }}>
-            <h3>Your Cart</h3>
+            <h3 className="text-xl font-semibold mb-4 border-b pb-2">Your Cart</h3>
             {cart.length === 0 ? (
               <p>Your cart is empty.</p>
             ) : (
               <>
-              <ul>
+              <ul className="space-y-3">
                 {cart.map((item) => (
-                  <li key={item.id}>
+                  <li className="flex justify-between items-center bg-white p-3 rounded-lg shadow-sm border" key={item.id}>
+                    
                     {item.name} - ${(item.price ?? 0).toFixed(2)}
-                    <button onClick={() => removeMutation.mutate(item.id)} style={{ marginLeft: "0.5rem" }}>
+                    <button className="px-3 py-1 text-sm text-red-600 border border-red-500 rounded hover:bg-red-50" onClick={() => removeMutation.mutate(item.id)} style={{ marginLeft: "0.5rem" }}>
                       Remove
                     </button>
                   </li>
@@ -272,9 +277,9 @@ export default function Dashboard() {
           </div>
 
           {cart.length > 0 && (
-            <button
+            <button className="btn btn-primary w-full bg-orange-500 rounded-sm hover:bg-orange-800 m-1 px-3 py-1  text-white"
               onClick={() => setCheckoutStage("checkout")}
-              style={{ marginTop: "1rem" }}
+              // style={{ marginTop: "1rem" }}
             >
               Proceed to Checkout
             </button>
@@ -284,15 +289,15 @@ export default function Dashboard() {
 
       {/* -------------------- CHECKOUT STAGE -------------------- */}
       {checkoutStage === "checkout" && (
-        <div style={{ marginTop: "1rem" }}>
-          <h3>Checkout</h3>
+        <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-2xl font-semibold border-b py-1 m-1 justify-center ">Checkout</h3>
           <label style={{ display: "block", marginBottom: "0.5rem" }}>
             Pickup Date:
             <input
               type="date"
               value={pickupDate}
               onChange={(e) => setPickupDate(e.target.value)}
-              style={{ marginLeft: "0.5rem" }}
+               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none"
             />
           </label>
           <label style={{ display: "block", marginBottom: "0.5rem" }}>
@@ -300,7 +305,7 @@ export default function Dashboard() {
             <select
               value={selectedStore || ""}
               onChange={(e) => setSelectedStore(Number(e.target.value))}
-              style={{ marginLeft: "0.5rem" }}
+               className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400 focus:outline-none"
             >
               <option value="" disabled>
                 Select a store
@@ -312,7 +317,7 @@ export default function Dashboard() {
               ))}
             </select>
           </label>
-          <button onClick={() => checkoutMutation.mutate()}>
+          <button  className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition duration-200" onClick={() => checkoutMutation.mutate()}>
             Confirm Order
           </button>
         </div>
@@ -320,11 +325,11 @@ export default function Dashboard() {
 
       {/* -------------------- CONFIRMATION STAGE -------------------- */}
       {checkoutStage === "confirmation" && orderConfirmation && (
-        <div style={{ marginTop: "1rem" }}>
-          <h3>Order Confirmed!</h3>
-          <p>Pickup Date: {orderConfirmation.pickupDate}</p>
-          <p>Store ID: {orderConfirmation.storeId}</p>
-          <ul>
+        <div className="max-w-md w-full bg-white p-6 rounded-lg shadow-md">
+          <h3 className="text-2xl font-semibold border-b py-1 m-1 justify-center " >Order Confirmed!</h3>
+          <p className="font-semibold">Pickup Date: {orderConfirmation.pickupDate}</p>
+          <p className="font-semibold">Store ID: {orderConfirmation.storeId}</p>
+          <ul className="gap-2 py-1 m-1">
             {orderConfirmation.items.map((item) => (
               <li key={item.id}>{item.name}</li>
             ))}
