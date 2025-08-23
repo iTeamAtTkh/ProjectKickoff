@@ -1,7 +1,7 @@
 
 .nav{
-  background: #5F391F;
- background: linear-gradient(180deg, rgba(95, 57, 31, 1) 15%, rgba(197, 118, 64, 1) 100%);
+    background: #5F391F;
+    background: linear-gradient(180deg, rgba(95, 57, 31, 1) 15%, rgba(197, 118, 64, 1) 100%);
     color: white;
     display: flex;
     justify-content: space-between;
@@ -9,12 +9,15 @@
     gap: 2rem;
     padding: 0 1rem;
     width:100%;
+    height: inherit;
+    
  
 }
 .site-title {
     font-size: 2rem;
 }
 .nav ul{
+
     padding: 0;
     margin:0;
     list-style: none;
@@ -29,8 +32,9 @@
     display: block;
 }
 .nav a:hover{
-    background-color: #777;
+    color:#C57640;
 }
 .nav a.active{
-    background-color: #555;
+    color: #F9F3F0;
+    opacity: 50%;
 }

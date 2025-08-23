@@ -14,8 +14,8 @@ const Developers = () => {
         {/* Dev 1 */}
         <div className="flex flex-col md:flex-row items-start gap-8">
           <img
-            className="w-60 h-60 rounded-full object-cover border border-#C57640"
-            src="../../public/Erick.jpeg"
+            className="w-60 h-60 rounded-full object-cover border-4 border-#C57640"
+            src="/Erick.jpeg"
             alt="Erick Samayoa portrait"
           />
           <div>
@@ -27,15 +27,15 @@ const Developers = () => {
               Known for his ability to solve problems with innovative solutions, Erick is passionate about merging storytelling and technology to design engaging web applications, interactive experiences, and game environments. 
               He is also one of the creators of *PantryPal*, a project dedicated to reducing food waste and increasing community access to resources.
 </p>
-            <a href="url" className="mt-2 inline-block text-blue-600 hover:underline">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/erick-samayoa-9b82a5b6/" className="mt-2 inline-block text-blue-600 hover:underline">LinkedIn</a>
           </div>
         </div>
 
         {/* Dev 2 */}
         <div className="flex flex-col md:flex-row items-start gap-8">
           <img
-            className="w-60 h-60 rounded-full object-cover border border-#C57640"
-            src="../../public/nexClose.jpeg"
+            className="w-60 h-60 rounded-full object-cover border-4 border-#C57640"
+            src="/nexClose.jpeg"
             alt="Shanea Woods portrait"
           />
           <div>
@@ -49,15 +49,15 @@ const Developers = () => {
               doubted she could maintain, Shanea has grown into a resilient and creative developer.Collaboration and innovation at TKH expanded her
               perspective, opening her mind to possibilities in both problem-solving and design. This journey ultimately led her to help build and
               design the site "PantryPal", a project that reflects her drive to merge technology with meaningful community impact.</p>
-            <a href="url" className="mt-2 inline-block text-blue-600 hover:underline">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/shanea-woods-a525b225a/" className="mt-2 inline-block text-blue-600 hover:underline">LinkedIn</a>
           </div>
         </div>
 
         {/* Dev 3 */}
         <div className="flex flex-col md:flex-row items-start gap-8">
           <img
-            className="w-60 h-60 rounded-full object-cover border b-#C57640"
-            src="../../public/Emse.jpeg"
+            className="w-60 h-60 rounded-full object-cover border-4 b-#C57640"
+            src="/Emse.jpeg"
             alt="Esmeralda Quezada portrait"
           />
           <div>
