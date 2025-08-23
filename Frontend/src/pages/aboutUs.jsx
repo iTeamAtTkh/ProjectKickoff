@@ -58,7 +58,7 @@ const AboutUs = () => {
           <Link
             to="/developers"
             className="mt-12 inline-flex items-center justify-center rounded-lg bg-[#C57640] px-8 py-4 text-[#F9F3F0] text-4xl font-extrabold italic uppercase tracking-wide shadow
-                       ring-4 ring-white/80 focus:outline-none focus:ring-4 focus:ring-white w-[851px] h-[118px] "
+                       ring-4 ring-white/80 focus:outline-none focus:ring-4 focus:ring-white w-[851px] h-[118px] hover:opacity-95"
           >
             Meet the Developers
           </Link>
