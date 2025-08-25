@@ -12,7 +12,11 @@ import orderRouter from "./routes/order.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+console.log("DEBUG ENV:", {
+  SUPABASE_URL: process.env.SUPABASE_URL,
+  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ? "loaded" : "missing",
+  SUPABASE_JWT_SECRET: process.env.SUPABASE_JWT_SECRET ? "loaded" : "missing",
+});
 // Enable CORS for your frontend
 app.use(cors({
   origin: "http://localhost:5173", // frontend URL
