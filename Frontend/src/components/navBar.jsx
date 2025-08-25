@@ -10,7 +10,11 @@ const Navbar = () => {
     {/* Left side links */}
     <ul className="flex items-center gap-6">
       <li className="site-title">
-        <NavLink to="/">homeSite</NavLink>
+        <NavLink to="/"><img
+              src="/pantrypalimg.png"  // your public folder image
+              alt="PantryPal logo"
+              className="h-12 w-auto" // adjust height as needed
+            /></NavLink>
       </li>
       <li className='text-xl uppercase'><NavLink to="/aboutUs">About</NavLink></li>
       <li className='text-xl uppercase'><NavLink to="/developers">Developers</NavLink></li>
