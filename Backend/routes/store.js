@@ -1,3 +1,4 @@
+// backend/routes/store.js
 import express from "express";
 import prisma from "../db/index.js";
 
