@@ -22,30 +22,32 @@ Backend is built using **Node.js**, **Express**, and **Prisma** with **PostgreSQ
 ---
 
 ## Project Structure
-ProjectKickoff/
-├── backend/
-│ ├── data/
-│ │ └── masterInventory.json
-│ ├── db/
-│ │ └── index.js
-│ ├── middleware/
-│ │ └── auth.js
-│ ├── prisma/
-│ │ └── schema.prisma
-│ ├── routes/
-│ │ ├── auth.js
-│ │ ├── auth-test.js
-│ │ ├── item.js
-│ │ ├── order.js
-│ │ ├── store.js
-│ │ └── user.js
-│ ├── scripts/
-│ │ ├── preprocess.js
-│ │ └── seedStores.js
-│ ├── .env.example
-│ ├── .gitignore
-│ ├── index.js
-│ └── package.json
+
+    ProjectKickoff/
+    ├── backend/
+    │   ├── data/
+    │   │   └── masterInventory.json
+    │   ├── db/
+    │   │   └── index.js
+    │   ├── middleware/
+    │   │   └── auth.js
+    │   ├── prisma/
+    │   │   └── schema.prisma
+    │   ├── routes/
+    │   │   ├── auth.js
+    │   │   ├── auth-test.js
+    │   │   ├── item.js
+    │   │   ├── order.js
+    │   │   ├── store.js
+    │   │   └── user.js
+    │   ├── scripts/
+    │   │   ├── preprocess.js
+    │   │   └── seedStores.js
+    │   ├── .env.example
+    │   ├── .gitignore
+    │   ├── index.js
+    │   └── package.json
+
 
 
 - `db/index.js` – Prisma client instance.  
