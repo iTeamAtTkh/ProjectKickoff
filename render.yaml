@@ -8,7 +8,7 @@ services:
     npm install
     npx prisma generate
   startCommand: npm start
-  autoDeployy: true
+  autoDeploy: true
   envVars:
   - key: DATABASE_URL
     sync: false
