@@ -8,19 +8,26 @@ import storeRouter from "./routes/store.js";
 import itemRouter from "./routes/item.js";
 import orderRouter from "./routes/order.js";
 
-
 dotenv.config();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 console.log("DEBUG ENV:", {
   SUPABASE_URL: process.env.SUPABASE_URL,
   SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ? "loaded" : "missing",
   SUPABASE_JWT_SECRET: process.env.SUPABASE_JWT_SECRET ? "loaded" : "missing",
 });
-// Enable CORS for your frontend
+
+// Enable CORS for frontend
+const allowedOrigins = [
+  "http://localhost:5173", // local dev
+  "https://your-netlify-site.netlify.app" // production frontend
+];
+
 app.use(cors({
-  origin: "http://localhost:5173", // frontend URL
-  credentials: true,               // allows cookies/auth headers
+  origin: allowedOrigins,
+  credentials: true
 }));
 
 app.use(express.json());
