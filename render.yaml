@@ -3,7 +3,7 @@ services:
   name: react-app
   plan: free
   env: node
-  region: california
+  region: oregon
   buildCommand:
     npm install
     npx prisma generate
