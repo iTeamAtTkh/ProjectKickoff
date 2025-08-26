@@ -3,13 +3,11 @@ services:
   name: react-app
   plan: free
   env: node
-  region: oregon
+  region: california
   buildCommand:
     npm install
     npx prisma generate
-  preDeploycommand:
-    npx prisma migrate deploy
-  startCommand: node index.js
+  startCommand: npm start
   autoDeploy: true
   envVars:
   - key: DATABASE_URL
@@ -17,4 +15,6 @@ services:
   - key: SUPABASE_URL
     sync: false
   - key: SUPABASE_SERVICE_ROLE_KEY
+    sync: false
+  - key: VITE_SUPABASE_ANON_KEY
     sync: false
