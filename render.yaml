@@ -1,1 +1,18 @@
-preDeployCommand: npx prisma migrate deploy;
+services:
+- type: web
+  name: react-app
+  plan: free
+  env: node
+  region: california
+  buildCommand:
+    npm install
+    npx prisma generate
+  startCommand: npm start
+  autoDeployy: true
+  envVars:
+  - key: DATABASE_URL
+    sync: false
+  - key: SUPABASE_URL
+    sync: false
+  - key: SUPABASE_SERVICE_ROLE_KEY
+    sync: false
